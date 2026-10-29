@@ -33,7 +33,6 @@
       align-items: center;
     }
 
-    /* Contenedor responsivo amplio: aprovecha el espacio disponible */
     .phone-canvas {
       width: 100%;
       max-width: 580px;
@@ -58,7 +57,6 @@
       }
     }
 
-    /* Barra de progreso global fina */
     .progress-track {
       position: absolute;
       top: 0;
@@ -75,7 +73,6 @@
       transition: width 0.25s ease-out;
     }
 
-    /* Cabecera persistente */
     .global-header-bar {
       width: 100%;
       height: 54px;
@@ -119,7 +116,6 @@
       text-transform: uppercase;
     }
 
-    /* Slider horizontal fluido */
     .slides-slider {
       display: flex;
       width: 100%;
@@ -147,7 +143,6 @@
       background: var(--bg-white);
     }
 
-    /* Portada (Slide 0) */
     .cover-header-img {
       width: 100%;
       height: 280px;
@@ -207,7 +202,6 @@
       transform: scale(0.97);
     }
 
-    /* Logo ampliado específicamente en la Portada */
     .cover-brand-box {
       display: flex;
       justify-content: center;
@@ -231,7 +225,6 @@
       transform: scale(1.05);
     }
 
-    /* Galería */
     .gal-top-bar {
       display: flex;
       justify-content: space-between;
@@ -287,7 +280,6 @@
       font-style: italic;
     }
 
-    /* Botón de Audio con Ecualizador */
     .btn-audio-pill {
       align-self: flex-start;
       display: inline-flex;
@@ -340,7 +332,6 @@
       100% { height: 100%; }
     }
 
-    /* Barra inferior */
     .gal-bottom-bar {
       display: flex;
       justify-content: space-between;
@@ -426,12 +417,10 @@
 
 <div class="phone-canvas">
 
-  <!-- Barra de progreso superior reactiva -->
   <div class="progress-track">
     <div class="progress-indicator" id="progressIndicator"></div>
   </div>
 
-  <!-- Barra de navegación con botón de menú -->
   <header class="global-header-bar">
     <a href="#" target="_top" class="btn-main-menu btn-link-principal" title="Regresar a la página principal">
       <span>⌂</span> Menú Principal
@@ -441,17 +430,16 @@
 
   <div class="slides-slider" id="cojardicomSlider">
 
-    <!-- ================= Slide 0: Portada ================= -->
+    <!-- Slide 0: Portada (.jpeg) -->
     <section class="slide-item" id="slide-0">
       <div class="cover-header-img">
-        <img src="assets/img/portada.png" alt="Invernadero Moravia">
+        <img src="assets/img/portada.jpeg" alt="Invernadero Moravia">
       </div>
       <div class="cover-body">
         <h1 class="cover-title">Cojardicom: fotografías que cuentan historias</h1>
         <p class="cover-sub">Crédito de la fotografía: Audrey Rodriguez</p>
         <button type="button" class="btn-start-recorrido" onclick="goToStep(1)">Iniciar Recorrido</button>
       </div>
-      <!-- Logo aumentado en Portada -->
       <div class="cover-brand-box">
         <a href="https://www.facebook.com/cojardicom/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="cover-brand-link" title="Visitar Facebook oficial de Cojardicom">
           <img src="assets/img/logo-cojardicom.png" alt="Logo Oficial Cojardicom Moravia">
@@ -459,10 +447,10 @@
       </div>
     </section>
 
-    <!-- ================= Slide 1 (01/09) ================= -->
+    <!-- Slide 1 (.jpeg) -->
     <section class="slide-item" id="slide-1">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">01/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-1.png" alt="Galería 01"></div>
+      <div class="gal-image-frame"><img src="assets/img/slide-1.jpeg" alt="Galería 01"></div>
       <div class="gal-details">
         <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
         <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-1')">
@@ -470,7 +458,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-1" preload="none"><source src="assets/audio/audio-01.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-1" preload="metadata"><source src="assets/audio/audio-01.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Elsy Torreglosa</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -483,10 +471,10 @@
       </div>
     </section>
 
-    <!-- ================= Slide 2 (02/09) ================= -->
+    <!-- Slide 2 (.jpeg) -->
     <section class="slide-item" id="slide-2">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">02/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-2.png" alt="Galería 02" loading="lazy"></div>
+      <div class="gal-image-frame"><img src="assets/img/slide-2.jpeg" alt="Galería 02" loading="lazy"></div>
       <div class="gal-details">
         <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
         <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-2')">
@@ -494,7 +482,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-2" preload="none"><source src="assets/audio/audio-02.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-2" preload="metadata"><source src="assets/audio/audio-02.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Elsy Torreglosa</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -507,10 +495,10 @@
       </div>
     </section>
 
-    <!-- ================= Slide 3 (03/09) ================= -->
+    <!-- Slide 3 (.jpeg) -->
     <section class="slide-item" id="slide-3">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">03/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-3.png" alt="Galería 03" loading="lazy"></div>
+      <div class="gal-image-frame"><img src="assets/img/slide-3.jpeg" alt="Galería 03" loading="lazy"></div>
       <div class="gal-details">
         <p class="gal-meta-line"><strong>Material de archivo:</strong> Cojardicom</p>
         <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-3')">
@@ -518,7 +506,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-3" preload="none"><source src="assets/audio/audio-03.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-3" preload="metadata"><source src="assets/audio/audio-03.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -531,10 +519,10 @@
       </div>
     </section>
 
-    <!-- ================= Slide 4 (04/09) ================= -->
+    <!-- Slide 4 (.jpeg) -->
     <section class="slide-item" id="slide-4">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">04/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-4.png" alt="Galería 04" loading="lazy"></div>
+      <div class="gal-image-frame"><img src="assets/img/slide-4.jpeg" alt="Galería 04" loading="lazy"></div>
       <div class="gal-details">
         <p class="gal-meta-line"><strong>Material de archivo:</strong> Cojardicom</p>
         <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-4')">
@@ -542,7 +530,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-4" preload="none"><source src="assets/audio/audio-04.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-4" preload="metadata"><source src="assets/audio/audio-04.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Elsy Torreglosa</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -555,10 +543,10 @@
       </div>
     </section>
 
-    <!-- ================= Slide 5 (05/09) ================= -->
+    <!-- Slide 5 (.jpeg) -->
     <section class="slide-item" id="slide-5">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">05/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-5.png" alt="Galería 05" loading="lazy"></div>
+      <div class="gal-image-frame"><img src="assets/img/slide-5.jpeg" alt="Galería 05" loading="lazy"></div>
       <div class="gal-details">
         <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
         <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-5')">
@@ -566,7 +554,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-5" preload="none"><source src="assets/audio/audio-05.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-5" preload="metadata"><source src="assets/audio/audio-05.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Elsy Torreglosa</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -579,10 +567,10 @@
       </div>
     </section>
 
-    <!-- ================= Slide 6 (06/09) ================= -->
+    <!-- Slide 6 (.jpeg) -->
     <section class="slide-item" id="slide-6">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">06/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-6.png" alt="Galería 06" loading="lazy"></div>
+      <div class="gal-image-frame"><img src="assets/img/slide-6.jpeg" alt="Galería 06" loading="lazy"></div>
       <div class="gal-details">
         <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
         <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-6')">
@@ -590,7 +578,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-6" preload="none"><source src="assets/audio/audio-06.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-6" preload="metadata"><source src="assets/audio/audio-06.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -603,7 +591,7 @@
       </div>
     </section>
 
-    <!-- ================= Slide 7 (07/09) ================= -->
+    <!-- Slide 7 (.png) -->
     <section class="slide-item" id="slide-7">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">07/09</span></div>
       <div class="gal-image-frame"><img src="assets/img/slide-7.png" alt="Galería 07" loading="lazy"></div>
@@ -614,7 +602,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-7" preload="none"><source src="assets/audio/audio-07.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-7" preload="metadata"><source src="assets/audio/audio-07.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -627,10 +615,10 @@
       </div>
     </section>
 
-    <!-- ================= Slide 8 (08/09) ================= -->
+    <!-- Slide 8 (.jpeg) -->
     <section class="slide-item" id="slide-8">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">08/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-8.png" alt="Galería 08" loading="lazy"></div>
+      <div class="gal-image-frame"><img src="assets/img/slide-8.jpeg" alt="Galería 08" loading="lazy"></div>
       <div class="gal-details">
         <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
         <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-8')">
@@ -638,7 +626,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-8" preload="none"><source src="assets/audio/audio-08.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-8" preload="metadata"><source src="assets/audio/audio-08.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -651,10 +639,10 @@
       </div>
     </section>
 
-    <!-- ================= Slide 9 (09/09) ================= -->
+    <!-- Slide 9 (.jpeg) -->
     <section class="slide-item" id="slide-9">
       <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">09/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-9.png" alt="Galería 09" loading="lazy"></div>
+      <div class="gal-image-frame"><img src="assets/img/slide-9.jpeg" alt="Galería 09" loading="lazy"></div>
       <div class="gal-details">
         <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
         <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-9')">
@@ -662,7 +650,7 @@
           <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
           <span class="label">Reproducir audio</span>
         </button>
-        <audio id="aud-9" preload="none"><source src="assets/audio/audio-09.mp3" type="audio/mpeg"></audio>
+        <audio id="aud-9" preload="metadata"><source src="assets/audio/audio-09.mp3" type="audio/mpeg"></audio>
         <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
@@ -691,30 +679,13 @@
   const sliderElem = document.getElementById('cojardicomSlider');
   const progressElem = document.getElementById('progressIndicator');
 
-  // Sincronización continua de la barra de progreso
   sliderElem.addEventListener('scroll', () => {
     window.requestAnimationFrame(() => {
       const scrollLeft = sliderElem.scrollLeft;
       const maxScroll = sliderElem.scrollWidth - sliderElem.clientWidth;
       if (maxScroll > 0) {
         const percentage = (scrollLeft / maxScroll) * 100;
-        progressElem.style.width = `${Math.min(Math.max(percentage, 0), 100)}%`;
-      }
-    });
-  }, { passive: true });
-
-  function goToStep(index) {
-    document.querySelectorAll('audio').forEach(aud => {
-      aud.pause();
-      aud.currentTime = 0;
-    });
-    document.querySelectorAll('.btn-audio-pill').forEach(btn => {
-      btn.classList.remove('playing');
-      const label = btn.querySelector('.label');
-      if (label) label.textContent = 'Reproducir audio';
-    });
-
-    const target = document.getElementById(`slide-${index}`);
+        progressElem.style.width = `${Math.min(Math.max(percentage, 0), 100)}\%`; } }); }, { passive: true });  function resetAllAudios() { document.querySelectorAll('audio').forEach(aud => { aud.pause(); aud.currentTime = 0; }); document.querySelectorAll('.btn-audio-pill').forEach(btn => { btn.classList.remove('playing'); const staticIcon = btn.querySelector('.static-icon'); const label = btn.querySelector('.label'); if (staticIcon) staticIcon.textContent = '▶'; if (label) label.textContent = 'Reproducir audio'; }); }  function goToStep(index) { resetAllAudios(); const target = document.getElementById(`slide-${index}`);
     if (target && sliderElem) {
       sliderElem.scrollTo({
         left: target.offsetLeft,
@@ -727,7 +698,11 @@
     const audio = document.getElementById(audioId);
     if (!audio) return;
 
+    const staticIcon = btn.querySelector('.static-icon');
+    const label = btn.querySelector('.label');
+
     if (audio.paused) {
+      // Detener cualquier otro audio que esté sonando
       document.querySelectorAll('audio').forEach(a => {
         if (a !== audio) {
           a.pause();
@@ -737,22 +712,37 @@
       document.querySelectorAll('.btn-audio-pill').forEach(b => {
         if (b !== btn) {
           b.classList.remove('playing');
-          b.querySelector('.label').textContent = 'Reproducir audio';
+          const otherIcon = b.querySelector('.static-icon');
+          const otherLabel = b.querySelector('.label');
+          if (otherIcon) otherIcon.textContent = '▶';
+          if (otherLabel) otherLabel.textContent = 'Reproducir audio';
         }
       });
 
-      audio.play();
-      btn.classList.add('playing');
-      btn.querySelector('.label').textContent = 'Pausar audio';
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          btn.classList.add('playing');
+          if (staticIcon) staticIcon.textContent = '⏸';
+          if (label) label.textContent = 'Pausar audio';
+        }).catch(error => {
+          console.error("Error al reproducir audio:", error);
+          btn.classList.remove('playing');
+          if (staticIcon) staticIcon.textContent = '▶';
+          if (label) label.textContent = 'Reproducir audio';
+        });
+      }
     } else {
       audio.pause();
       btn.classList.remove('playing');
-      btn.querySelector('.label').textContent = 'Reproducir audio';
+      if (staticIcon) staticIcon.textContent = '▶';
+      if (label) label.textContent = 'Reproducir audio';
     }
 
     audio.onended = () => {
       btn.classList.remove('playing');
-      btn.querySelector('.label').textContent = 'Reproducir audio';
+      if (staticIcon) staticIcon.textContent = '▶';
+      if (label) label.textContent = 'Reproducir audio';
     };
   }
 </script>
