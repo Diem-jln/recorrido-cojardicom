@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Metadatos estándar de codificación y viewport optimizado para dispositivos móviles -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Cojardicom - Recorrido Virtual</title>
+
+  <!-- ======================================================== -->
+  <!-- ESTILOS GENERALES Y ARQUITECTURA DE DISEÑO DEL COMPONENTE -->
+  <!-- ======================================================== -->
   <style>
+    /* Variables institucionales de color Cojardicom y diseño interactivo */
     :root {
       --bg-white: #ffffff;
+      --bg-surface: #faf7f9;
       --text-magenta: #bf1677;
       --text-muted: #8c426e;
+      --text-dark: #2b1f28;
       --line-purple: #631252;
+      --line-soft: rgba(99, 18, 82, 0.16);
       --btn-mauve: #ac8a9f;
       --btn-mauve-active: #8b6b7f;
+      --slider-track-bg: rgba(99, 18, 82, 0.18);
     }
 
+    /* Reset global de márgenes, rellenos y modelo de caja */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -22,6 +33,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* Contenedor viewport raíz centrado para vista en Shorthand e iframe */
     body {
       background-color: var(--bg-white);
       color: var(--text-magenta);
@@ -33,6 +45,7 @@
       align-items: center;
     }
 
+    /* Lienzo simulador tipo marco móvil responsivo y centrado */
     .phone-canvas {
       width: 100%;
       max-width: 580px;
@@ -48,6 +61,7 @@
       box-shadow: 0 16px 48px rgba(99, 18, 82, 0.16);
     }
 
+    /* Adaptabilidad completa en teléfonos de borde a borde */
     @media (max-width: 600px) {
       .phone-canvas {
         max-height: 100vh;
@@ -57,6 +71,7 @@
       }
     }
 
+    /* Pista de progreso fina en el borde superior del marco */
     .progress-track {
       position: absolute;
       top: 0;
@@ -66,6 +81,8 @@
       background: rgba(99, 18, 82, 0.12);
       z-index: 60;
     }
+
+    /* Indicador dinámico reactivo al desplazamiento */
     .progress-indicator {
       width: 0%;
       height: 100%;
@@ -73,10 +90,11 @@
       transition: width 0.25s ease-out;
     }
 
+    /* Barra de encabezado superior persistente */
     .global-header-bar {
       width: 100%;
-      height: 54px;
-      padding: 6px 20px 0 20px;
+      height: 52px;
+      padding: 4px 18px 0 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -86,6 +104,7 @@
       flex-shrink: 0;
     }
 
+    /* Botón de retorno al menú principal de Shorthand */
     .btn-main-menu {
       display: inline-flex;
       align-items: center;
@@ -93,33 +112,37 @@
       background: var(--btn-mauve);
       color: var(--bg-white);
       border: 1px solid var(--line-purple);
-      padding: 7px 14px;
-      border-radius: 18px;
-      font-size: 0.82rem;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
       font-weight: 700;
       text-decoration: none;
       transition: background 0.2s ease, transform 0.15s ease;
       cursor: pointer;
     }
+
     .btn-main-menu:hover {
       background: var(--btn-mauve-active);
     }
+
     .btn-main-menu:active {
       transform: scale(0.97);
     }
 
+    /* Etiqueta institucional lateral de la cabecera */
     .header-tag {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 800;
       color: var(--text-magenta);
       letter-spacing: 0.8px;
       text-transform: uppercase;
     }
 
+    /* Contenedor deslizante horizontal con soporte táctil continuo */
     .slides-slider {
       display: flex;
       width: 100%;
-      height: calc(100% - 54px);
+      height: calc(100% - 52px);
       overflow-x: auto;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
@@ -127,32 +150,38 @@
       scrollbar-width: none;
       overscroll-behavior-x: contain;
     }
+
     .slides-slider::-webkit-scrollbar {
       display: none;
     }
 
+    /* Cada una de las diapositivas o estaciones del recorrido */
     .slide-item {
       flex: 0 0 100%;
       width: 100%;
       height: 100%;
       scroll-snap-align: start;
-      padding: 20px 24px;
+      padding: 12px 20px 12px 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       background: var(--bg-white);
     }
 
+    /* ======================================================== */
+    /* ESTILOS DE LA PORTADA (SLIDE 0)                          */
+    /* ======================================================== */
     .cover-header-img {
       width: 100%;
-      height: 280px;
-      max-height: 38vh;
-      border-radius: 20px;
+      height: 270px;
+      max-height: 36vh;
+      border-radius: 18px;
       overflow: hidden;
       background: #fbf8fa;
       border: 2px solid var(--line-purple);
       flex-shrink: 0;
     }
+
     .cover-header-img img {
       width: 100%;
       height: 100%;
@@ -164,40 +193,45 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 20px 10px;
+      padding: 16px 10px;
       flex-grow: 1;
       justify-content: center;
     }
+
     .cover-title {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 2.1rem;
+      font-size: 2rem;
       font-weight: 700;
       line-height: 1.25;
       color: var(--text-magenta);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
+
     .cover-sub {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--text-muted);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
+
     .btn-start-recorrido {
       width: 100%;
-      max-width: 320px;
+      max-width: 300px;
       background: var(--btn-mauve);
       color: var(--bg-white);
       border: 1.5px solid var(--line-purple);
-      border-radius: 32px;
-      padding: 15px 24px;
-      font-size: 1.08rem;
+      border-radius: 30px;
+      padding: 14px 22px;
+      font-size: 1.05rem;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 6px 18px rgba(99, 18, 82, 0.22);
       transition: transform 0.15s ease, background 0.2s ease;
     }
+
     .btn-start-recorrido:hover {
       background: var(--btn-mauve-active);
     }
+
     .btn-start-recorrido:active {
       transform: scale(0.97);
     }
@@ -206,9 +240,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding-top: 10px;
-      padding-bottom: 6px;
+      padding-top: 8px;
+      padding-bottom: 4px;
     }
+
     .cover-brand-link {
       display: inline-flex;
       align-items: center;
@@ -216,147 +251,260 @@
       text-decoration: none;
       transition: transform 0.2s ease;
     }
+
     .cover-brand-link img {
-      height: 68px;
-      max-width: 240px;
+      height: 64px;
+      max-width: 220px;
       object-fit: contain;
     }
+
     .cover-brand-link:hover {
       transform: scale(1.05);
     }
 
+    /* ======================================================== */
+    /* ESTILOS DE GALERÍA Y DETALLES EDITORIALES               */
+    /* ======================================================== */
     .gal-top-bar {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding-bottom: 6px;
+      padding-bottom: 4px;
       border-bottom: 1px dashed var(--line-purple);
       flex-shrink: 0;
     }
+
     .gal-top-title {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.85rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: var(--text-magenta);
     }
+
     .gal-counter {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--text-magenta);
     }
 
     .gal-image-frame {
       width: 100%;
-      height: 400px;
-      max-height: 48vh;
-      border-radius: 20px;
+      height: 320px;
+      max-height: 36vh;
+      border-radius: 16px;
       overflow: hidden;
-      background: #000;
+      background: #000000;
       border: 2px solid var(--line-purple);
-      margin: 10px 0;
+      margin-top: 6px;
+      margin-bottom: 4px;
       flex-shrink: 0;
     }
+
     .gal-image-frame img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
+    /* Caja de pie de foto con contexto exacto */
+    .gal-caption-box {
+      font-size: 0.8rem;
+      line-height: 1.35;
+      color: var(--text-dark);
+      background: var(--bg-surface);
+      border-left: 3.5px solid var(--line-purple);
+      padding: 5px 10px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 4px;
+      font-style: normal;
+    }
+
     .gal-details {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      padding-bottom: 6px;
+      gap: 2px;
     }
+
     .gal-meta-line {
-      font-size: 0.88rem;
-      line-height: 1.4;
+      font-size: 0.76rem;
+      line-height: 1.3;
       color: var(--text-magenta);
     }
+
     .gal-meta-source {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
       font-style: italic;
     }
 
+    /* ======================================================== */
+    /* MÓDULO DE REPRODUCCIÓN DE AUDIO INTERACTIVO              */
+    /* ======================================================== */
+    .audio-player-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: #fbf6f9;
+      border: 1.5px solid var(--line-purple);
+      border-radius: 14px;
+      padding: 6px 12px;
+      margin: 3px 0 3px 0;
+    }
+
+    .audio-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
     .btn-audio-pill {
-      align-self: flex-start;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 5px;
       background: var(--btn-mauve);
       color: var(--bg-white);
       border: 1.5px solid var(--line-purple);
-      border-radius: 22px;
-      padding: 8px 18px;
-      font-size: 0.88rem;
+      border-radius: 14px;
+      padding: 5px 12px;
+      font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
-      margin: 6px 0 8px 0;
+      flex-shrink: 0;
       transition: background 0.2s ease, transform 0.15s ease;
     }
+
     .btn-audio-pill:hover {
       background: var(--btn-mauve-active);
     }
+
     .btn-audio-pill.playing {
       background: var(--line-purple);
       border-color: var(--text-magenta);
     }
 
+    /* Animación del ecualizador sonoro */
     .equalizer-icon {
       display: none;
       align-items: flex-end;
       gap: 2px;
-      height: 14px;
-      width: 14px;
+      height: 11px;
+      width: 11px;
     }
+
     .btn-audio-pill.playing .equalizer-icon {
       display: flex;
     }
+
     .btn-audio-pill.playing .static-icon {
       display: none;
     }
+
     .eq-bar {
-      width: 3px;
+      width: 2.5px;
       background: #ffffff;
       border-radius: 1px;
       animation: bounce 0.8s ease-in-out infinite alternate;
     }
-    .eq-bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
-    .eq-bar:nth-child(2) { height: 95%; animation-delay: 0.3s; }
-    .eq-bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+
+    .eq-bar:nth-child(1) { height: 35%; animation-delay: 0.1s; }
+    .eq-bar:nth-child(2) { height: 90%; animation-delay: 0.3s; }
+    .eq-bar:nth-child(3) { height: 55%; animation-delay: 0.2s; }
 
     @keyframes bounce {
       0% { height: 20%; }
       100% { height: 100%; }
     }
 
+    /* Envoltura del scrubber y timer */
+    .scrubber-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-grow: 1;
+    }
+
+    /* Control deslizante estilizado */
+    .audio-scrubber {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--slider-track-bg);
+      outline: none;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .audio-scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--text-magenta);
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(99, 18, 82, 0.4);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .audio-scrubber::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+
+    .audio-scrubber::-moz-range-thumb {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--text-magenta);
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(99, 18, 82, 0.4);
+      cursor: pointer;
+    }
+
+    .audio-timer {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--line-purple);
+      min-width: 60px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ======================================================== */
+    /* BARRA INFERIOR DE NAVEGACIÓN Y BOTONES DE AVANCE         */
+    /* ======================================================== */
     .gal-bottom-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 10px;
+      padding-top: 6px;
       border-top: 1.5px solid var(--line-purple);
       flex-shrink: 0;
     }
+
     .btn-back-arrow {
-      width: 48px;
-      height: 48px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       border: 1.5px solid var(--line-purple);
       background: var(--btn-mauve);
       color: var(--bg-white);
-      font-size: 1.5rem;
+      font-size: 1.35rem;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: background 0.15s ease;
     }
+
     .btn-back-arrow:hover {
       background: var(--btn-mauve-active);
     }
+
     .btn-back-arrow:active {
       transform: scale(0.95);
     }
@@ -368,12 +516,14 @@
       text-decoration: none;
       cursor: pointer;
     }
+
     .brand-footer-link img {
-      height: 44px;
-      max-width: 140px;
+      height: 38px;
+      max-width: 125px;
       object-fit: contain;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
+
     .brand-footer-link img:hover {
       opacity: 0.85;
       transform: scale(1.04);
@@ -383,13 +533,14 @@
       border: 1.5px solid var(--line-purple);
       background: var(--btn-mauve);
       color: var(--bg-white);
-      padding: 9px 18px;
-      border-radius: 18px;
-      font-size: 0.9rem;
+      padding: 7px 15px;
+      border-radius: 16px;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
       transition: background 0.2s;
     }
+
     .btn-next-step:hover {
       background: var(--btn-mauve-active);
     }
@@ -398,16 +549,17 @@
       background: var(--line-purple);
       color: var(--bg-white);
       border: 1px solid var(--text-magenta);
-      padding: 9px 16px;
-      border-radius: 18px;
-      font-size: 0.85rem;
+      padding: 7px 14px;
+      border-radius: 16px;
+      font-size: 0.8rem;
       font-weight: 700;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: background 0.2s;
     }
+
     .btn-finish-menu:hover {
       background: var(--text-magenta);
     }
@@ -415,12 +567,15 @@
 </head>
 <body>
 
+<!-- Marco principal contenedor del dispositivo -->
 <div class="phone-canvas">
 
+  <!-- Barra de progreso superior -->
   <div class="progress-track">
     <div class="progress-indicator" id="progressIndicator"></div>
   </div>
 
+  <!-- Encabezado general permanente con acceso al Menú Principal -->
   <header class="global-header-bar">
     <a href="#" target="_top" class="btn-main-menu btn-link-principal" title="Regresar a la página principal">
       <span>⌂</span> Menú Principal
@@ -428,16 +583,19 @@
     <span class="header-tag">Moravia Viva</span>
   </header>
 
+  <!-- Contenedor general del slider con soporte táctil horizontal -->
   <div class="slides-slider" id="cojardicomSlider">
 
-    <!-- Slide 0: Portada (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 0: PORTADA DEL RECORRIDO VIRTUAL                   -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-0">
       <div class="cover-header-img">
         <img src="assets/img/portada.jpeg" alt="Invernadero Moravia">
       </div>
       <div class="cover-body">
         <h1 class="cover-title">Cojardicom: fotografías que cuentan historias</h1>
-        <p class="cover-sub">Crédito de la fotografía: Audrey Rodriguez</p>
+        <p class="cover-sub">Foto tomada por Audrey Rodriguez.</p>
         <button type="button" class="btn-start-recorrido" onclick="goToStep(1)">Iniciar Recorrido</button>
       </div>
       <div class="cover-brand-box">
@@ -447,21 +605,48 @@
       </div>
     </section>
 
-    <!-- Slide 1 (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 1 (01/09): PRIMEROS ASENTAMIENTOS Y RECICLAJE      -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-1">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">01/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-1.jpeg" alt="Galería 01"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">01/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-1.jpeg" alt="Galería 01">
+      </div>
+      
+      <!-- Descripción contextual editorial -->
+      <div class="gal-caption-box">
+        "Valla ubicada cerca de la Corporación Cojardicom, en el morro de Moravia. Muestra los primeros asentamientos y cómo empezó el trabajo de reciclaje en el basurero."
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-1')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-1" preload="metadata"><source src="assets/audio/audio-01.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Elsy Torreglosa</p>
+        <p class="gal-meta-line">Foto tomada por Audrey Rodriguez.</p>
+        
+        <!-- Módulo interactivo de audio con scrubber táctil -->
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-1', 'scrub-1', 'time-1')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-1" min="0" value="0" step="0.1" oninput="scrubAudio('aud-1', this.value)">
+              <span class="audio-timer" id="time-1">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-1" preload="metadata" ontimeupdate="updateAudioUI('aud-1', 'scrub-1', 'time-1')" onloadedmetadata="initAudioDuration('aud-1', 'scrub-1', 'time-1')">
+            <source src="assets/audio/audio-01.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Elsy Torreglosa, una de las fundadoras de Cojardicom y lideresa de Moravia.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Volver al Inicio" onclick="goToStep(0)">←</button>
         <button type="button" class="btn-next-step" onclick="goToStep(2)">Siguiente →</button>
@@ -471,21 +656,46 @@
       </div>
     </section>
 
-    <!-- Slide 2 (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 2 (02/09): VALLA DENTRO DEL VIVERO DE COJARDICOM   -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-2">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">02/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-2.jpeg" alt="Galería 02" loading="lazy"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">02/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-2.jpeg" alt="Galería 02" loading="lazy">
+      </div>
+      
+      <div class="gal-caption-box">
+        "Valla dentro del vivero de Cojardicom. Muestra los incendios que había en el morro, la montaña de basura y, a un lado, los asentamientos de las personas."
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-2')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-2" preload="metadata"><source src="assets/audio/audio-02.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Elsy Torreglosa</p>
+        <p class="gal-meta-line">Foto tomada por Audrey Rodriguez.</p>
+        
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-2', 'scrub-2', 'time-2')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-2" min="0" value="0" step="0.1" oninput="scrubAudio('aud-2', this.value)">
+              <span class="audio-timer" id="time-2">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-2" preload="metadata" ontimeupdate="updateAudioUI('aud-2', 'scrub-2', 'time-2')" onloadedmetadata="initAudioDuration('aud-2', 'scrub-2', 'time-2')">
+            <source src="assets/audio/audio-02.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Elsy Torreglosa, una de las fundadoras de Cojardicom y lideresa de Moravia.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Anterior" onclick="goToStep(1)">←</button>
         <button type="button" class="btn-next-step" onclick="goToStep(3)">Siguiente →</button>
@@ -495,21 +705,46 @@
       </div>
     </section>
 
-    <!-- Slide 3 (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 3 (03/09): ROSA GIRALDO, HORTENSIA Y ELSY         -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-3">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">03/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-3.jpeg" alt="Galería 03" loading="lazy"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">03/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-3.jpeg" alt="Galería 03" loading="lazy">
+      </div>
+      
+      <div class="gal-caption-box">
+        "Rosa Giraldo, Hortensia y Elsy Torreglosa, mujeres de la Corporación Cojardicom, junto a plantas del vivero."
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Material de archivo:</strong> Cojardicom</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-3')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-3" preload="metadata"><source src="assets/audio/audio-03.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
+        <p class="gal-meta-line">Cortesía de Cojardicom.</p>
+        
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-3', 'scrub-3', 'time-3')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-3" min="0" value="0" step="0.1" oninput="scrubAudio('aud-3', this.value)">
+              <span class="audio-timer" id="time-3">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-3" preload="metadata" ontimeupdate="updateAudioUI('aud-3', 'scrub-3', 'time-3')" onloadedmetadata="initAudioDuration('aud-3', 'scrub-3', 'time-3')">
+            <source src="assets/audio/audio-03.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Rosa Giraldo, una de las fundadoras de la corporación Cojardicom.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Anterior" onclick="goToStep(2)">←</button>
         <button type="button" class="btn-next-step" onclick="goToStep(4)">Siguiente →</button>
@@ -519,21 +754,46 @@
       </div>
     </section>
 
-    <!-- Slide 4 (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 4 (04/09): VALLA DE RESIDUOS DEBAJO DEL MORRO      -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-4">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">04/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-4.jpeg" alt="Galería 04" loading="lazy"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">04/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-4.jpeg" alt="Galería 04" loading="lazy">
+      </div>
+      
+      <div class="gal-caption-box">
+        "Valla cerca de la corporación, en el morro de Moravia. Explica qué hay debajo del morro: los residuos."
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Material de archivo:</strong> Cojardicom</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-4')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-4" preload="metadata"><source src="assets/audio/audio-04.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Elsy Torreglosa</p>
+        <p class="gal-meta-line">Foto tomada por Audrey Rodriguez.</p>
+        
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-4', 'scrub-4', 'time-4')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-4" min="0" value="0" step="0.1" oninput="scrubAudio('aud-4', this.value)">
+              <span class="audio-timer" id="time-4">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-4" preload="metadata" ontimeupdate="updateAudioUI('aud-4', 'scrub-4', 'time-4')" onloadedmetadata="initAudioDuration('aud-4', 'scrub-4', 'time-4')">
+            <source src="assets/audio/audio-04.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Elsy Torreglosa, una de las fundadoras de Cojardicom y lideresa de Moravia.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Anterior" onclick="goToStep(3)">←</button>
         <button type="button" class="btn-next-step" onclick="goToStep(5)">Siguiente →</button>
@@ -543,21 +803,46 @@
       </div>
     </section>
 
-    <!-- Slide 5 (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 5 (05/09): PLACA INSTITUCIONAL DE 2012             -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-5">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">05/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-5.jpeg" alt="Galería 05" loading="lazy"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">05/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-5.jpeg" alt="Galería 05" loading="lazy">
+      </div>
+      
+      <div class="gal-caption-box">
+        "Placa institucional de 2012, del año en que se entregó el vivero, junto a una imagen de las primeras plantas."
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-5')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-5" preload="metadata"><source src="assets/audio/audio-05.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Elsy Torreglosa</p>
+        <p class="gal-meta-line">Foto tomada por Audrey Rodriguez · Cortesía de Cojardicom.</p>
+        
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-5', 'scrub-5', 'time-5')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-5" min="0" value="0" step="0.1" oninput="scrubAudio('aud-5', this.value)">
+              <span class="audio-timer" id="time-5">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-5" preload="metadata" ontimeupdate="updateAudioUI('aud-5', 'scrub-5', 'time-5')" onloadedmetadata="initAudioDuration('aud-5', 'scrub-5', 'time-5')">
+            <source src="assets/audio/audio-05.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Elsy Torreglosa, una de las fundadoras de Cojardicom y lideresa de Moravia.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Anterior" onclick="goToStep(4)">←</button>
         <button type="button" class="btn-next-step" onclick="goToStep(6)">Siguiente →</button>
@@ -567,21 +852,46 @@
       </div>
     </section>
 
-    <!-- Slide 6 (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 6 (06/09): VISTA AÉREA CON DRON / ARCOÍRIS (.JPEG)  -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-6">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">06/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-6.jpeg" alt="Galería 06" loading="lazy"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">06/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-6.jpeg" alt="Galería 06" loading="lazy">
+      </div>
+      
+      <div class="gal-caption-box">
+        "Rosa Giraldo junto a una planta en mal estado. Representa los esfuerzos y procesos que ellas hicieron para que crecieran plantas y ayudar al morro, y que a veces eran arrancadas por la misma comunidad. Junto a ella, una foto de cómo están hoy esos jardines, lo único que queda es uno de los árboles sembrados por ellas de raíces profundas y asentamientos."
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-6')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-6" preload="metadata"><source src="assets/audio/audio-06.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
+        <p class="gal-meta-line">Cortesía de Cojardicom.</p>
+        
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-6', 'scrub-6', 'time-6')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-6" min="0" value="0" step="0.1" oninput="scrubAudio('aud-6', this.value)">
+              <span class="audio-timer" id="time-6">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-6" preload="metadata" ontimeupdate="updateAudioUI('aud-6', 'scrub-6', 'time-6')" onloadedmetadata="initAudioDuration('aud-6', 'scrub-6', 'time-6')">
+            <source src="assets/audio/audio-06.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Rosa Giraldo, una de las fundadoras de la corporación Cojardicom.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Anterior" onclick="goToStep(5)">←</button>
         <button type="button" class="btn-next-step" onclick="goToStep(7)">Siguiente →</button>
@@ -591,21 +901,46 @@
       </div>
     </section>
 
-    <!-- Slide 7 (.png) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 7 (07/09): ROSA GIRALDO Y PLANTA EN MAL ESTADO (.PNG) -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-7">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">07/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-7.png" alt="Galería 07" loading="lazy"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">07/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-7.png" alt="Galería 07" loading="lazy">
+      </div>
+      
+      <div class="gal-caption-box">
+        "Vista aérea, tomada con dron, del morro con los jardines del segundo proceso que se hizo en Moravia y otra fotografía de estos mismos jardines que se llamaban Jardines Arcoíris."
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Material de archivo:</strong> Cojardicom</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-7')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-7" preload="metadata"><source src="assets/audio/audio-07.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
+        <p class="gal-meta-line">Foto tomada por Audrey Rodriguez.</p>
+        
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-7', 'scrub-7', 'time-7')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-7" min="0" value="0" step="0.1" oninput="scrubAudio('aud-7', this.value)">
+              <span class="audio-timer" id="time-7">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-7" preload="metadata" ontimeupdate="updateAudioUI('aud-7', 'scrub-7', 'time-7')" onloadedmetadata="initAudioDuration('aud-7', 'scrub-7', 'time-7')">
+            <source src="assets/audio/audio-07.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Rosa Giraldo, una de las fundadoras de la corporación Cojardicom.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Anterior" onclick="goToStep(6)">←</button>
         <button type="button" class="btn-next-step" onclick="goToStep(8)">Siguiente →</button>
@@ -615,21 +950,46 @@
       </div>
     </section>
 
-    <!-- Slide 8 (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 8 (08/09): EL VIVERO HOY Y PROYECTO DEL VIÑEDO     -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-8">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">08/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-8.jpeg" alt="Galería 08" loading="lazy"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">08/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-8.jpeg" alt="Galería 08" loading="lazy">
+      </div>
+      
+      <div class="gal-caption-box">
+        "El vivero hoy, junto a las plantas y las uvas que cultivan para el proyecto del viñedo."
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-8')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-8" preload="metadata"><source src="assets/audio/audio-08.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
+        <p class="gal-meta-line">Foto tomada por Audrey Rodriguez.</p>
+        
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-8', 'scrub-8', 'time-8')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-8" min="0" value="0" step="0.1" oninput="scrubAudio('aud-8', this.value)">
+              <span class="audio-timer" id="time-8">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-8" preload="metadata" ontimeupdate="updateAudioUI('aud-8', 'scrub-8', 'time-8')" onloadedmetadata="initAudioDuration('aud-8', 'scrub-8', 'time-8')">
+            <source src="assets/audio/audio-08.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Rosa Giraldo, una de las fundadoras de la corporación Cojardicom.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Anterior" onclick="goToStep(7)">←</button>
         <button type="button" class="btn-next-step" onclick="goToStep(9)">Siguiente →</button>
@@ -639,24 +999,49 @@
       </div>
     </section>
 
-    <!-- Slide 9 (.jpeg) -->
+    <!-- ======================================================== -->
+    <!-- SLIDE 9 (09/09): CIERRE DEL RECORRIDO Y SALIDA AL MENÚ   -->
+    <!-- ======================================================== -->
     <section class="slide-item" id="slide-9">
-      <div class="gal-top-bar"><span class="gal-top-title">Galería</span><span class="gal-counter">09/09</span></div>
-      <div class="gal-image-frame"><img src="assets/img/slide-9.jpeg" alt="Galería 09" loading="lazy"></div>
+      <div class="gal-top-bar">
+        <span class="gal-top-title">Galería</span>
+        <span class="gal-counter">09/09</span>
+      </div>
+      <div class="gal-image-frame">
+        <img src="assets/img/slide-9.jpg" alt="Galería 09" loading="lazy">
+      </div>
+      
+      <div class="gal-caption-box">
+        Vista consolidada del territorio: jardines y procesos comunitarios que florecen en Moravia.
+      </div>
+
       <div class="gal-details">
-        <p class="gal-meta-line"><strong>Crédito de la fotografía:</strong> Audrey Rodriguez</p>
-        <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-9')">
-          <span class="static-icon">▶</span>
-          <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
-          <span class="label">Reproducir audio</span>
-        </button>
-        <audio id="aud-9" preload="metadata"><source src="assets/audio/audio-09.mp3" type="audio/mpeg"></audio>
-        <p class="gal-meta-line"><strong>Crédito de audio:</strong> Rosa Giraldo</p>
+        <p class="gal-meta-line">Foto tomada por Audrey Rodriguez.</p>
+        
+        <div class="audio-player-container">
+          <div class="audio-controls-row">
+            <button type="button" class="btn-audio-pill" onclick="toggleAudio(this, 'aud-9', 'scrub-9', 'time-9')">
+              <span class="static-icon">▶</span>
+              <span class="equalizer-icon"><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span></span>
+              <span class="label">Audio</span>
+            </button>
+            <div class="scrubber-wrap">
+              <input type="range" class="audio-scrubber" id="scrub-9" min="0" value="0" step="0.1" oninput="scrubAudio('aud-9', this.value)">
+              <span class="audio-timer" id="time-9">0:00 / 0:00</span>
+            </div>
+          </div>
+          <audio id="aud-9" preload="metadata" ontimeupdate="updateAudioUI('aud-9', 'scrub-9', 'time-9')" onloadedmetadata="initAudioDuration('aud-9', 'scrub-9', 'time-9')">
+            <source src="assets/audio/audio-09.mpeg" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <p class="gal-meta-line"><strong>Audio:</strong> Rosa Giraldo, una de las fundadoras de la corporación Cojardicom.</p>
         <p class="gal-meta-source">Fuente: Entrevista realizada por Audrey Rodriguez, 2026</p>
       </div>
+
       <div class="gal-bottom-bar">
         <button type="button" class="btn-back-arrow" title="Anterior" onclick="goToStep(8)">←</button>
-        <div style="display:flex; gap:10px; align-items:center;">
+        <div style="display:flex; gap:8px; align-items:center;">
           <button type="button" class="btn-next-step" onclick="goToStep(0)">Reiniciar ↺</button>
           <a href="#" target="_top" class="btn-finish-menu btn-link-principal">Salir al Menú</a>
         </div>
@@ -669,40 +1054,138 @@
   </div>
 </div>
 
+<!-- ======================================================== -->
+<!-- SCRIPT DE NAVEGACIÓN, SINCRONIZACIÓN Y REPRODUCCIÓN       -->
+<!-- ======================================================== -->
 <script>
+  // Enlace base para el botón superior y final de retorno a la página matriz
   const URL_PAGINA_PRINCIPAL = "https://preview.shorthand.com/Vsoz1Ci49G4yXO0T/responsive/phone";
 
+  // Asignar el hipervínculo correspondiente a todos los botones designados
   document.querySelectorAll('.btn-link-principal').forEach(link => {
     link.href = URL_PAGINA_PRINCIPAL;
   });
 
+  // Nodos DOM principales de control del carrusel y barra de progreso
   const sliderElem = document.getElementById('cojardicomSlider');
   const progressElem = document.getElementById('progressIndicator');
 
+  // Variable de bandera para evitar conflictos de cálculo mientras se ejecuta un scrollTo
+  let isNavigatingProgrammatically = false;
+
+  // Cálculo reactivo continuo de la barra superior al deslizar (por botón o gesto táctil)
   sliderElem.addEventListener('scroll', () => {
     window.requestAnimationFrame(() => {
       const scrollLeft = sliderElem.scrollLeft;
       const maxScroll = sliderElem.scrollWidth - sliderElem.clientWidth;
       if (maxScroll > 0) {
         const percentage = (scrollLeft / maxScroll) * 100;
-        progressElem.style.width = `${Math.min(Math.max(percentage, 0), 100)}\%`; } }); }, { passive: true });  function resetAllAudios() { document.querySelectorAll('audio').forEach(aud => { aud.pause(); aud.currentTime = 0; }); document.querySelectorAll('.btn-audio-pill').forEach(btn => { btn.classList.remove('playing'); const staticIcon = btn.querySelector('.static-icon'); const label = btn.querySelector('.label'); if (staticIcon) staticIcon.textContent = '▶'; if (label) label.textContent = 'Reproducir audio'; }); }  function goToStep(index) { resetAllAudios(); const target = document.getElementById(`slide-${index}`);
-    if (target && sliderElem) {
-      sliderElem.scrollTo({
-        left: target.offsetLeft,
-        behavior: 'smooth'
-      });
+        progressElem.style.width = `${Math.min(Math.max(percentage, 0), 100)}%`;
+      }
+    });
+  }, { passive: true });
+
+  // Función utilitaria para dar formato a segundos en mm:ss
+  function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) return "0:00";
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  // Inicialización de la duración máxima del audio en cuanto carga el archivo
+  function initAudioDuration(audioId, scrubberId, timerId) {
+    const audio = document.getElementById(audioId);
+    const scrubber = document.getElementById(scrubberId);
+    const timer = document.getElementById(timerId);
+    if (!audio || !scrubber || !timer) return;
+
+    if (audio.duration && !isNaN(audio.duration)) {
+      scrubber.max = audio.duration;
+      timer.textContent = `0:00 / ${formatTime(audio.duration)}`;
     }
   }
 
-  function toggleAudio(btn, audioId) {
+  // Actualización del avance del audio, la posición del scrubber y el temporizador
+  function updateAudioUI(audioId, scrubberId, timerId) {
     const audio = document.getElementById(audioId);
+    const scrubber = document.getElementById(scrubberId);
+    const timer = document.getElementById(timerId);
+    if (!audio || !scrubber || !timer) return;
+
+    if (!scrubber.matches(':active')) {
+      scrubber.value = audio.currentTime;
+    }
+    const current = formatTime(audio.currentTime);
+    const total = formatTime(audio.duration);
+    timer.textContent = `${current} / ${total}`;
+
+    // Efecto visual de relleno de la pista deslizante con degradado dinámico
+    if (audio.duration) {
+      const ratio = (audio.currentTime / audio.duration) * 100;
+      scrubber.style.background = `linear-gradient(to right, var(--text-magenta) 0%, var(--text-magenta) ${ratio}%, rgba(99, 18, 82, 0.18) ${ratio}%, rgba(99, 18, 82, 0.18) 100%)`;
+    }
+  }
+
+  // Salto a segundo puntual al mover la barra con el mouse o dedo
+  function scrubAudio(audioId, value) {
+    const audio = document.getElementById(audioId);
+    if (audio) {
+      audio.currentTime = value;
+    }
+  }
+
+  // Pausar y reiniciar todos los audios y controles antes de cambiar de estación
+  function resetAllAudios() {
+    document.querySelectorAll('audio').forEach(aud => {
+      aud.pause();
+      aud.currentTime = 0;
+    });
+    document.querySelectorAll('.btn-audio-pill').forEach(btn => {
+      btn.classList.remove('playing');
+      const staticIcon = btn.querySelector('.static-icon');
+      if (staticIcon) staticIcon.textContent = '▶';
+    });
+    document.querySelectorAll('.audio-scrubber').forEach(scrub => {
+      scrub.value = 0;
+      scrub.style.background = 'rgba(99, 18, 82, 0.18)';
+    });
+  }
+
+  // Desplazamiento limpio sin bloqueo de CSS scroll-snap
+  function goToStep(index) {
+    resetAllAudios();
+    const target = document.getElementById(`slide-${index}`);
+    if (target && sliderElem) {
+      // 1. Apagar temporalmente el bloqueo forzado de scroll-snap para permitir la animación libre
+      sliderElem.style.scrollSnapType = 'none';
+
+      // 2. Ejecutar scrollIntoView nativo en el contenedor horizontal
+      target.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'start',
+        block: 'nearest'
+      });
+
+      // 3. Reactivar scroll-snap una vez completada la transición suave (350ms)
+      clearTimeout(window.snapRestoreTimeout);
+      window.snapRestoreTimeout = setTimeout(() => {
+        sliderElem.style.scrollSnapType = 'x mandatory';
+      }, 380);
+    }
+  }
+
+  // Alternar reproducción y pausa con control de promesas y ecualizador animado
+  function toggleAudio(btn, audioId, scrubberId, timerId) {
+    const audio = document.getElementById(audioId);
+    const scrubber = document.getElementById(scrubberId);
+    const timer = document.getElementById(timerId);
     if (!audio) return;
 
     const staticIcon = btn.querySelector('.static-icon');
-    const label = btn.querySelector('.label');
 
     if (audio.paused) {
-      // Detener cualquier otro audio que esté sonando
+      // Detener cualquier otro audio en curso
       document.querySelectorAll('audio').forEach(a => {
         if (a !== audio) {
           a.pause();
@@ -713,36 +1196,42 @@
         if (b !== btn) {
           b.classList.remove('playing');
           const otherIcon = b.querySelector('.static-icon');
-          const otherLabel = b.querySelector('.label');
           if (otherIcon) otherIcon.textContent = '▶';
-          if (otherLabel) otherLabel.textContent = 'Reproducir audio';
         }
       });
 
+      // Disparar promesa nativa de reproducción
       const playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
           btn.classList.add('playing');
           if (staticIcon) staticIcon.textContent = '⏸';
-          if (label) label.textContent = 'Pausar audio';
-        }).catch(error => {
-          console.error("Error al reproducir audio:", error);
+          if (audio.duration && scrubber) {
+            scrubber.max = audio.duration;
+          }
+        }).catch(err => {
+          console.error("Error al reproducir audio:", err);
           btn.classList.remove('playing');
           if (staticIcon) staticIcon.textContent = '▶';
-          if (label) label.textContent = 'Reproducir audio';
         });
       }
     } else {
       audio.pause();
       btn.classList.remove('playing');
       if (staticIcon) staticIcon.textContent = '▶';
-      if (label) label.textContent = 'Reproducir audio';
     }
 
+    // Al finalizar la pista de audio
     audio.onended = () => {
       btn.classList.remove('playing');
       if (staticIcon) staticIcon.textContent = '▶';
-      if (label) label.textContent = 'Reproducir audio';
+      if (scrubber) {
+        scrubber.value = 0;
+        scrubber.style.background = 'rgba(99, 18, 82, 0.18)';
+      }
+      if (timer && audio.duration) {
+        timer.textContent = `0:00 / ${formatTime(audio.duration)}`;
+      }
     };
   }
 </script>
